@@ -25,13 +25,13 @@ System::System()
     }
 }
 
-Processor& System::Cpu() { return cpu_; }
+const Processor& System::Cpu() { return cpu_; }
 
-vector<Process>& System::Processes() { return processes_; }
+const vector<Process>& System::Processes() { return processes_; }
 
-std::string System::Kernel() { return LinuxParser::Kernel(); }
+std::string System::Kernel() const { return LinuxParser::Kernel(); }
 
-float System::MemoryUtilization()
+float System::MemoryUtilization() const
 {
   auto mem_info = LinuxParser::MemoryUtilization();
   auto total_memory = mem_info.first;
@@ -39,10 +39,10 @@ float System::MemoryUtilization()
   return (total_memory - free_memory) / total_memory;
 }
 
-std::string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
+std::string System::OperatingSystem() const { return LinuxParser::OperatingSystem(); }
 
-int System::RunningProcesses() { return LinuxParser::RunningProcesses(); }
+int System::RunningProcesses() const { return LinuxParser::RunningProcesses(); }
 
-int System::TotalProcesses() { return LinuxParser::TotalProcesses(); }
+int System::TotalProcesses() const { return LinuxParser::TotalProcesses(); }
 
-long int System::UpTime() { return LinuxParser::UpTime(); }
+long int System::UpTime() const { return LinuxParser::UpTime(); }

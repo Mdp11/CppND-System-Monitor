@@ -8,18 +8,18 @@ class System;
 class Process
 {
  public:
-  Process(System& system, int pid);
+  Process(const System& system, int pid);
 
-  int Pid();
-  std::string User();
-  std::string Command();
-  float CpuUtilization();
-  std::string Ram();
-  long int UpTime();
-  bool operator<(Process& other);
+  int Pid() const;
+  std::string User() const;
+  std::string Command() const;
+  float CpuUtilization() const;
+  std::string Ram() const;
+  long int UpTime() const;
+  bool operator<(const Process& other) const;
 
  private:
-  System& system_;
+  const System& system_;
   int pid_;
 };
 
