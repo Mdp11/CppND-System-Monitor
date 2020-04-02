@@ -18,11 +18,12 @@ using std::vector;
 
 System::System()
 {
-    auto pids = LinuxParser::Pids();
-    for(const auto& pid : pids)
-    {
-        processes_.emplace_back(*this, pid);
-    }
+  auto pids = LinuxParser::Pids();
+  for (const auto& pid : pids)
+  {
+    processes_.emplace_back(this, pid);
+  }
+  std::sort(processes_.begin(), processes_.end());
 }
 
 const Processor& System::Cpu() { return cpu_; }
@@ -39,7 +40,10 @@ float System::MemoryUtilization() const
   return (total_memory - free_memory) / total_memory;
 }
 
-std::string System::OperatingSystem() const { return LinuxParser::OperatingSystem(); }
+std::string System::OperatingSystem() const
+{
+  return LinuxParser::OperatingSystem();
+}
 
 int System::RunningProcesses() const { return LinuxParser::RunningProcesses(); }
 

@@ -8,7 +8,12 @@ class System;
 class Process
 {
  public:
-  Process(const System& system, int pid);
+  Process(const System* system, int pid);
+  // Process(const Process&);
+  // Process(Process&&);
+
+  // Process& operator=(const Process&);
+  // Process& operator=(Process&&);
 
   int Pid() const;
   std::string User() const;
@@ -19,7 +24,7 @@ class Process
   bool operator<(const Process& other) const;
 
  private:
-  const System& system_;
+  const System* system_;
   int pid_;
 };
 

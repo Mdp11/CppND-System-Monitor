@@ -12,7 +12,26 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Process::Process(const System& system, int pid) : system_(system), pid_(pid) {}
+Process::Process(const System* system, int pid) : system_(system), pid_(pid) {}
+
+// Process::Process(const Process& other)
+// {
+//   system_ = other.system_;
+//   pid_ = other.pid_;
+// }
+// Process::Process(Process&& other)
+// {
+
+// }
+
+// Process& Process::operator=(const Process& other)
+// {
+
+// }
+// Process& Process::operator=(Process&& other)
+// {
+
+// }
 
 int Process::Pid() const { return pid_; }
 
@@ -33,13 +52,19 @@ float Process::CpuUtilization() const
 
 string Process::Command() const { return LinuxParser::Command(pid_); }
 
-string Process::Ram() const { return LinuxParser::Ram(pid_); }
+string Process::Ram() const
+{
+  return std::to_string(static_cast<int>(std::stof(LinuxParser::Ram(pid_)) / 1024));
+}
 
 string Process::User() const { return LinuxParser::User(pid_); }
 
 long int Process::UpTime() const
 {
-  return system_.UpTime() - LinuxParser::UpTime(pid_);
+  return system_->UpTime() - LinuxParser::UpTime(pid_);
 }
 
-bool Process::operator<(const Process& other) const { return Ram() < other.Ram(); }
+bool Process::operator<(const Process& other) const
+{
+  return std::stof(Ram()) > std::stof(other.Ram());
+}
